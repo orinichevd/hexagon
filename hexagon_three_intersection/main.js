@@ -1,5 +1,4 @@
 import * as THREE from '../node_modules/three/build/three.module.js';
-import Stats from '../node_modules/three/examples/jsm/libs/stats.module.js';
 import { GUI } from '../node_modules/dat.gui/build/dat.gui.module.js';
 import { OrbitControls } from '../node_modules/three/examples/jsm/controls/OrbitControls.js';
 import { EffectComposer } from '../node_modules/three/examples/jsm/postprocessing/EffectComposer.js';
@@ -91,13 +90,12 @@ function onDocumentMouseMove(event) {
 }
 
 function createHexShape(radius, position, angle, color) {
-    console.log(position);
     let hex = createHex(radius, angle);
-    let hexShpae = new THREE.Shape(hex);
-    let hexGeo = new THREE.EdgesGeometry(new THREE.ShapeGeometry(hexShpae));
-    var hexMat = new THREE.LineBasicMaterial({ color: color, linewidth: 200 });
+    let hexShape = new THREE.Shape(hex);
+    let hexGeo = new THREE.ShapeGeometry(hexShape);
+    var hexMat = new THREE.MeshBasicMaterial({ color: color });
 
-    let hexMesh = new THREE.LineSegments(hexGeo, hexMat);
+    let hexMesh = new THREE.Mesh(hexGeo, hexMat);
     hexMesh.position.set(position.x, position.y, position.z);
     scene.add(hexMesh);
 }
@@ -126,12 +124,11 @@ function createCone(radiusSmall, z, radiusBig, rotationAngle) {
         geometry.vertices.push(new THREE.Vector3(bx, by, 0));
     }
     let hexGeo = new THREE.EdgesGeometry(geometry);
-    var hexMat = new THREE.LineBasicMaterial({ color: 0xdc8426, linewidth: 1 });
+    var hexMat = new THREE.MeshLambertMaterial({ color: 0xdc8426, linewidth: 1 });
 
     let hexMesh = new THREE.LineSegments(hexGeo, hexMat);
     
     cone = new THREE.Line(geometry, hexMat);
-    console.log(cone.geometry);
     scene.add(cone);
 
 }
